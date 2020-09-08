@@ -59,7 +59,12 @@ void OnPaint(HWND ah_wnd)
 }
 //왼쪽 마우스 클릭했을 경우 사용할 코드
 void OnLButtonDown(HWND ah_wnd, int a_x, int a_y) {
-	
+	//바둑판 영역에만 돌을 놓을 수 있도록 클릭한 위치가 바둑판 영역인지 체크 
+	if (a_x > (XPOS(0) - HALF_INTERVAL) && a_y > (YPOS(0) - HALF_INTERVAL)
+		&& a_x < (XPOS(X_COUNT - 1) + HALF_INTERVAL) && a_y < (YPOS(Y_COUNT - 1) + HALF_INTERVAL)) {
+
+
+	}
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -71,6 +76,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	else if (uMsg == WM_LBUTTONDOWN) {
 		int x = LOWORD(lParam);
 		int y = HIWORD(lParam);
+		OnLButtonDown(hWnd, x, y);
 	}
 	else if (uMsg == WM_DESTROY) PostQuitMessage(0);
 	
