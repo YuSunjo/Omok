@@ -15,11 +15,14 @@
 
 #define HALF_INTERVAL INTERVAL/2
 
+//좌표
 #define XPOS(x)	(START_X +(x)* INTERVAL)	
 #define YPOS(Y)	(START_Y +(Y)* INTERVAL)	
 
+//바둑판에 돌이 놓여져 있는지 기억하는 함수 , 0-없음 1- 검 2 - 흰 
 unsigned char g_dol[Y_COUNT][X_COUNT];
 
+//현재 어떤 돌인지 결정
 unsigned char g_step;
 
 
@@ -63,6 +66,20 @@ void OnLButtonDown(HWND ah_wnd, int a_x, int a_y) {
 	if (a_x > (XPOS(0) - HALF_INTERVAL) && a_y > (YPOS(0) - HALF_INTERVAL)
 		&& a_x < (XPOS(X_COUNT - 1) + HALF_INTERVAL) && a_y < (YPOS(Y_COUNT - 1) + HALF_INTERVAL)) {
 
+		//바둑판 놓는 작업 --> 선 가운데에 놓기 위한 작업 
+		//거리공식하면 어려워짐....  
+		int x = (a_x - START_X + HALF_INTERVAL) / INTERVAL;
+		int y = (a_y - START_Y + HALF_INTERVAL) / INTERVAL;
+
+		if (g_dol[y][x] == 0) {
+			//돌이 없는 곳에만 돌을 놓을 수있음
+			g_dol[y][x] = g_step + 1;
+
+			g_step = !g_step;
+			//화면 갱신 
+			InvalidateRect(ah_wnd, NULL, TRUE);
+		
+		}
 
 	}
 }

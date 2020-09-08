@@ -1,0 +1,1 @@
+make omok program with win32.
